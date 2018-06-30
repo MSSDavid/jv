@@ -712,7 +712,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jogadoresJList);
 
         convidarJButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        convidarJButton.setText("Convidar");
+        convidarJButton.setText("Chamar para Partida");
         convidarJButton.setEnabled(false);
         convidarJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

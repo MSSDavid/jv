@@ -103,7 +103,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="placarLocalJLabel" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="placarLocalJLabel" min="-2" pref="30" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jogo1JLabel" min="-2" pref="8" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -114,9 +114,8 @@
                           <Component id="jogo4JLabel" min="-2" pref="8" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jogo5JLabel" min="-2" pref="8" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="placarRemotoJLabel" min="-2" pref="30" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jogadorLocalJLabel" min="-2" pref="169" max="-2" attributes="0"/>
@@ -124,9 +123,9 @@
                           <Component id="statusJLabel" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jogadorRemotoJLabel" min="-2" pref="169" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Component id="posicoesJPanel" alignment="0" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -142,7 +141,7 @@
                       </Group>
                       <Component id="statusJLabel" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="placarLocalJLabel" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
@@ -156,7 +155,7 @@
                           <Component id="jogo5JLabel" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="posicoesJPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
@@ -685,7 +684,6 @@
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="VOC&#xca; &#xc9; O X"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="placarLocalJLabel">
@@ -778,7 +776,7 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="sairJButton" max="32767" attributes="0"/>
                       <Component id="convidarJButton" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" pref="319" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="314" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

@@ -758,7 +758,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Apelido:");
 
-        jLabel4.setText("Dispositivo de Rede");
+        jLabel4.setText("Dispositivo de Rede:");
 
         conectarJButton.setText("Conectar");
         conectarJButton.addActionListener(new java.awt.event.ActionListener() {

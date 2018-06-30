@@ -351,9 +351,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(pos2JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pos2JLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,14 +663,14 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jogadorLocalJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(statusJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addComponent(statusJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jogadorRemotoJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
+                .addGap(200, 200, 200)
                 .addComponent(posicoesJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(200, 200, 200))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,9 +692,9 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                         .addComponent(jogo3JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jogo4JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jogo5JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(150, 150, 150)
                 .addComponent(posicoesJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(150, 150, 150))
         );
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
@@ -861,7 +859,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                     .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -886,42 +884,6 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // encerra programa
         encerraPrograma();
     }//GEN-LAST:event_sairJButtonActionPerformed
-
-    private void pos2JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos2JLabelMouseClicked
-        escolhePosicao(2);
-    }//GEN-LAST:event_pos2JLabelMouseClicked
-
-    private void pos3JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos3JLabelMouseClicked
-        escolhePosicao(3);
-    }//GEN-LAST:event_pos3JLabelMouseClicked
-
-    private void pos4JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos4JLabelMouseClicked
-        escolhePosicao(4);
-    }//GEN-LAST:event_pos4JLabelMouseClicked
-
-    private void pos5JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos5JLabelMouseClicked
-        escolhePosicao(5);
-    }//GEN-LAST:event_pos5JLabelMouseClicked
-
-    private void pos6JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos6JLabelMouseClicked
-        escolhePosicao(6);
-    }//GEN-LAST:event_pos6JLabelMouseClicked
-
-    private void pos7JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos7JLabelMouseClicked
-        escolhePosicao(7);
-    }//GEN-LAST:event_pos7JLabelMouseClicked
-
-    private void pos8JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos8JLabelMouseClicked
-        escolhePosicao(8);
-    }//GEN-LAST:event_pos8JLabelMouseClicked
-
-    private void pos9JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos9JLabelMouseClicked
-        escolhePosicao(9);
-    }//GEN-LAST:event_pos9JLabelMouseClicked
-
-    private void pos1JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos1JLabelMouseClicked
-        escolhePosicao(1);
-    }//GEN-LAST:event_pos1JLabelMouseClicked
 
     private void encerraPrograma()
     {
@@ -1112,6 +1074,42 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         quemEstaOnlineTimer.start();
 
     }//GEN-LAST:event_conectarJButtonActionPerformed
+
+    private void pos9JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos9JLabelMouseClicked
+        escolhePosicao(9);
+    }//GEN-LAST:event_pos9JLabelMouseClicked
+
+    private void pos8JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos8JLabelMouseClicked
+        escolhePosicao(8);
+    }//GEN-LAST:event_pos8JLabelMouseClicked
+
+    private void pos7JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos7JLabelMouseClicked
+        escolhePosicao(7);
+    }//GEN-LAST:event_pos7JLabelMouseClicked
+
+    private void pos6JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos6JLabelMouseClicked
+        escolhePosicao(6);
+    }//GEN-LAST:event_pos6JLabelMouseClicked
+
+    private void pos5JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos5JLabelMouseClicked
+        escolhePosicao(5);
+    }//GEN-LAST:event_pos5JLabelMouseClicked
+
+    private void pos4JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos4JLabelMouseClicked
+        escolhePosicao(4);
+    }//GEN-LAST:event_pos4JLabelMouseClicked
+
+    private void pos3JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos3JLabelMouseClicked
+        escolhePosicao(3);
+    }//GEN-LAST:event_pos3JLabelMouseClicked
+
+    private void pos2JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos2JLabelMouseClicked
+        escolhePosicao(2);
+    }//GEN-LAST:event_pos2JLabelMouseClicked
+
+    private void pos1JLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos1JLabelMouseClicked
+        escolhePosicao(1);
+    }//GEN-LAST:event_pos1JLabelMouseClicked
                 
     private void encerrarConviteParaJogar(boolean timeout)
     {

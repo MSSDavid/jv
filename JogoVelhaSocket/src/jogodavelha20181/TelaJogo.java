@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package jogovelha;
+package jogodavelha20181;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -28,82 +23,72 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author willi
- * 
- * Classe que controla a interface gráfica do jogo da velha
- */
-public class TabuleiroFrame extends javax.swing.JFrame {
-    private char[][] tabuleiro = new char[3][3];  // tabuleiro do jogo
-    private boolean estaJogando;    // indica se jogo está em andamento
-    private boolean estaConectado;  // indica se jogador local está conectado
-    private boolean minhaVez;       // indica se é a vez do jogador local
-    private boolean inicieiUltimoJogo;  // indica se último jogo foi iniciado pelo jogador local
-    private boolean fuiConvidado;   // indica se jogador local foi convidado
-    private ServerSocket servidorTCP;      // socket servidor TCP criado para jogador remoto se conectar
-    private ConexaoTCP conexaoTCP;      // conexão TCP com o jogador remoto
-    private String apelidoLocal;    // apelido do jogador local
-    private DefaultListModel<JogadorOnLine> jogadores;  // lista de jogadores que estão online
-    private final static Random numAleatorio = new Random();   // gerador de números aleatórios
+public class TelaJogo extends javax.swing.JFrame {
     
-    private final int PORTA_UDP = 20181;
+    //variaveis jogadores e conexao
+    private char[][] telaJogo = new char[3][3];  //tela do jogo com quantidade de "quadrados" 
+    private boolean estaRodando;    //verifica se jogo está rodando
+    private boolean jogadorConectado;  //verifica se o jogador está conectado
+    private boolean vezAtual;       //mostra se é a vez do jogador
+    private boolean ultimoJogoComecado;  //armazena se o jogador foi o iniciante da ultima jogada
+    private boolean convidado;   //mostra se o jogador foi convidado
+    private ServerSocket servidorTCP;      // socket servidor TCP 
+    private ConexaoTCP conexaoTCP;      // conexão TCP com o outro jogador
+    private String apelidoJogador;    // apelido do jogador local
+    private DefaultListModel<JogadorOnLine> jogadoresOnline;  // lista de jogadores que estão online
+    private final static Random random = new Random();   // gerador de números aleatórios
+   
+    //porta conexao UDP
+    private final int UDP_PORTA = 20181; 
     
-    // cores dos jogadores no tabuleiro
-    private final Color COR_LOCAL = new Color(51, 153, 0);
-    private final Color COR_REMOTO = new Color(255, 0, 0);
-    private final Color COR_EMPATE = new Color(255,255,0);
-    
-    // identificação dos jogadores
-    public final static int JOGADOR_LOCAL = 1;
-    public final static int JOGADOR_REMOTO = 2;
-    public final char POSICAO_VAZIA = ' ';
-    public final char POSICAO_LOCAL = 'X';
-    public final char POSICAO_REMOTO = 'O';
-    
-    // motivos para jogo encerrar
-    public final static int CONEXAO_TIMEOUT = 0;
-    public final static int CONEXAO_CAIU = 1;
-    public final static int JOGADOR_DESISTIU = 2;
-    public final static int FIM_JOGO = 3;
-    
-    // resultados dos jogos
+    //resultados jogo neutro
     private final int SEM_RESULTADO = -1;
-    private final int EMPATE = 0;
-    private final int VITORIA_LOCAL = 1;
-    private final int VITORIA_REMOTO = 2;
-    
-    // posições no tabuleiro onde foi conseguido a vitória
     private final int SEM_GANHADOR = 0;
-    private final int LINHA_1 = 1;
-    private final int LINHA_2 = 2;
-    private final int LINHA_3 = 3;
-    private final int COLUNA_1 = 4;
-    private final int COLUNA_2 = 5;
-    private final int COLUNA_3 = 6;
-    private final int DIAGONAL_PRINCIPAL = 7;
-    private final int DIAGONAL_SECUNDARIA = 8;
+    private final int EMPATADO = 0;
     
-    // tipos de mensagens mostradas na tela
-    public static final String MSG_IN = "IN";
-    public static final String MSG_OUT = "OUT";
-    public static final String MSG_ERRO = "ERRO";
-    public static final String MSG_INFO = "INFO";
-    public static final String MSG_PROTO_TCP = "TCP";
-    public static final String MSG_PROTO_UDP = "UDP";
-    public static final String MSG_PROTO_NENHUM = "";
+    //resultados do jogo vitoria
+    private final int GANHOU_LOCAL = 1;
+    private final int GANHOU_REMOTO = 2;
+    private final int GANHOU_NA_LINHA_1 = 1;
+    private final int GANHOU_NA_LINHA_2 = 2;
+    private final int GANHOU_NA_LINHA_3 = 3;
+    private final int GANHOU_NA_COLUNA_1 = 4;
+    private final int GANHOU_NA_COLUNA_2 = 5;
+    private final int GANHOU_NA_COLUNA_3 = 6;
+    private final int GANHOU_NA_DIAGONAL_PRINCIPAL = 7;
+    private final int GANHOU_NA_DIAGONAL_SECUNDARIA = 8;
+
+    //dados gerais
+    public final char VAZIO = ' ';
+    private final Color COR_EMPATE = new Color(255,64,129);
     
+    //dados jogador local
+    public final static int JOGADOR_LOCAL = 1;
+    public final char POSICAO_JOGADOR_LOCAL = 'X';
+    private final Color COR_LOCAL = new Color(106,27,154);
+    
+    //dados jogador remoto
+    public final static int JOGADOR_REMOTO = 2;
+    public final char POSICAO_JOGADOR_REMOTO = 'O';
+    private final Color COR_REMOTO = new Color(255,109,0);    
+    
+    //jogo encerrado quando
+    public final static int TEMPO_EXCEDIDO = 0;
+    public final static int CONEXAO_PERDIDA = 1;
+    public final static int JOGADOR_DESISTIU = 2;
+    public final static int FIM = 3;
+       
     private int[] resultados = new int[5];  // resultados de cada jogo
     private int jogoAtual;          // número do jogo atual
 
     // dados relacionados a threads e sockets
-    private EscutaUDP udpEscutaThread;         // thread para leitura da porta UDP
-    private EscutaTCP tcpEscutaThread;         // thread de escuta da porta TCP
-    private InetAddress addrLocal;             // endereço do jogador local
-    private InetAddress addrBroadcast;         // endereço para broadcasting
-    private InetAddress addrJogadorRemoto;     // endereço do jogador remoto
+    private EscutaUDP threadEscutaUDP;         // thread para leitura da porta UDP
+    private EscutaTCP threadEscutaTCP;         // thread de escuta da porta TCP
+    private InetAddress enderecoLocal;             // endereço do jogador local
+    private InetAddress enderecoBroad;         // endereço para broadcasting
+    private InetAddress enderecoRemoto;     // endereço do jogador remoto
     private String apelidoRemoto;              // apelido do jogador remoto
-    private Timer quemEstaOnlineTimer;         // temporizador para saber quem está online
+    private Timer quemEstaOnLine;         // temporizador para saber quem está online
     private Timer timeoutQuemEstaOnlineTimer;  // temporizador de timeout
     private Timer timeoutAguardandoJogadorRemoto;    // temporizador de timeout
     
@@ -113,50 +98,53 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     private boolean esperandoConfirmacao;
     private boolean esperandoJogadorRemoto;
     private boolean esperandoRespostaConvite;
+            
+    // tipos de mensagens mostradas na tela
+    public static final String MSG_IN = "IN";
+    public static final String MSG_OUT = "OUT";
+    public static final String MSG_ERRO = "ERRO";
+    public static final String MSG_INFO = "INFO";
+    public static final String MSG_PROTO_TCP = "TCP";
+    public static final String MSG_PROTO_UDP = "UDP";
+    public static final String MSG_PROTO_NENHUM = "";
     
-    /**
-     * Creates new form TabuleiroFrame
-     */
-    public TabuleiroFrame() {
+    
+    //tela propriamente dita
+    public TelaJogo() {
         initComponents();
         
-        // título do programa
-        this.setTitle("Jogo da Velha Remoto");
-        
-        // centraliza janela na tela
+        // título da janela e centraliza
+        this.setTitle("Jogo da Velha");        
         this.setLocationRelativeTo(null);
         
         // inicializa variáveis
-        estaJogando = estaConectado = false;
-        servidorTCP = null;
-        conexaoTCP = null;
-        udpEscutaThread = null;
-        tcpEscutaThread = null;
-        addrLocal = null;
+        threadEscutaUDP = null;
+        threadEscutaTCP = null;
+        enderecoLocal = null;
         esperandoConexao = esperandoInicioJogo = false;
         esperandoConfirmacao = esperandoJogadorRemoto = false;
         esperandoRespostaConvite = false;
+        estaRodando = jogadorConectado = false;
+        servidorTCP = null;
+        conexaoTCP = null;
 
         // cria endereço para broadcasting
         try {
-            // envia broadcasting para avisar que eu estou online
-            addrBroadcast = InetAddress.getByName("255.255.255.255");
+            // envia mensagem avisando online
+            enderecoBroad = InetAddress.getByName("255.255.255.255");
         } catch (UnknownHostException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Não foi possível criar endereço para broadcasting.",
-                    "Encerrando programa",
+            JOptionPane.showMessageDialog(null, "Broadcasting não foi possível.", "Finalizando programa",
                     JOptionPane.ERROR_MESSAGE);
-            encerraPrograma();
+            finalizaPrograma();
             return;
         }
         
-        // cria lista de jogadores que estão online e
-        // vincula a lista ao controle JList
-        jogadores = new DefaultListModel<>();
-        jogadoresJList.setModel(jogadores);
+        // cria lista de jogadores que estão online 
+        jogadoresOnline = new DefaultListModel<>();
+        jogadoresJList.setModel(jogadoresOnline);
         jogadoresJList.setCellRenderer(new JogadorJListRenderer());
 
-        // Coletar e mostrar interfaces de rede cadastradas
+        // Coleta e mostrar interfaces de rede cadastradas
         try
         {
             Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
@@ -187,20 +175,18 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         }
         
         // temporizador para atualização da lista de jogadores online
-        // a cada 3 min (ou seja, a cada 180.000 milisegundos
         ActionListener quemEstaOnlinePerformer = (ActionEvent evt) -> {
-            // limpa flag de jogador online da lista de jogadores
-            for(int i = 0; i < jogadores.getSize(); ++i)
-                jogadores.get(i).setAindaOnline(false);
+            for(int i = 0; i < jogadoresOnline.getSize(); ++i)
+                jogadoresOnline.get(i).setAindaOnline(false);
             
             // envia mensagem para saber quem está online
-            enviarMensagemUDP(addrBroadcast, 1, apelidoLocal);
+            enviarMensagemUDP(enderecoBroad, 1, apelidoJogador);
             
             // dispara temporizador de timeout
             timeoutQuemEstaOnlineTimer.start();
         };
-        quemEstaOnlineTimer = new Timer(180000, quemEstaOnlinePerformer);
-        quemEstaOnlineTimer.setRepeats(true);   // temporizador repete indefinidamente
+        quemEstaOnLine = new Timer(180000, quemEstaOnlinePerformer);
+        quemEstaOnLine.setRepeats(true);   // temporizador repete indefinidamente
         
         // temporizador para timeout da atualização da lista de jogadores online
         // Quem não responder a MSG01 em 15 seg será considerado offline
@@ -218,7 +204,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             if(esperandoRespostaConvite)
                 encerrarConviteParaJogar(true);
             else
-                encerrarConexaoTCP(CONEXAO_TIMEOUT);
+                encerrarConexaoTCP(TEMPO_EXCEDIDO);
         };
         
         timeoutAguardandoJogadorRemoto = new Timer(30000, timeoutAguardandoJogadorRemotoPerformer);
@@ -302,9 +288,10 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(255, 153, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBackground(new java.awt.Color(204, 102, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel4.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -331,7 +318,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             .addComponent(pos1JLabel)
         );
 
-        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setBackground(new java.awt.Color(204, 102, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -355,7 +342,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             .addComponent(pos2JLabel)
         );
 
-        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setBackground(new java.awt.Color(204, 102, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel6.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -383,7 +370,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 146, Short.MAX_VALUE))
         );
 
-        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel7.setBackground(new java.awt.Color(204, 102, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel7.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -411,7 +398,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel8.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel8.setBackground(new java.awt.Color(204, 102, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel8.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -439,7 +426,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 146, Short.MAX_VALUE))
         );
 
-        jPanel9.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel9.setBackground(new java.awt.Color(204, 102, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel9.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -467,7 +454,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel10.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel10.setBackground(new java.awt.Color(204, 102, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel10.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -495,7 +482,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel11.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel11.setBackground(new java.awt.Color(204, 102, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel11.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -523,7 +510,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 .addGap(0, 146, Short.MAX_VALUE))
         );
 
-        jPanel12.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel12.setBackground(new java.awt.Color(204, 102, 255));
         jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setPreferredSize(new java.awt.Dimension(150, 150));
 
@@ -754,6 +741,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {convidarJButton, sairJButton});
 
+        jPanel14.setBackground(new java.awt.Color(255, 204, 204));
         jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder("Jogador Local"));
 
         jLabel3.setText("Apelido:");
@@ -866,13 +854,13 @@ public class TabuleiroFrame extends javax.swing.JFrame {
 
     private void sairJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairJButtonActionPerformed
         // encerra programa
-        encerraPrograma();
+        finalizaPrograma();
     }//GEN-LAST:event_sairJButtonActionPerformed
 
-    private void encerraPrograma()
+    private void finalizaPrograma()
     {
         // informa à rede que jogador local ficou offline
-        enviarMensagemUDP(addrBroadcast, 3, apelidoLocal, true);
+        enviarMensagemUDP(enderecoBroad, 3, apelidoJogador, true);
         
         Container frame = sairJButton.getParent();
         do
@@ -884,48 +872,48 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // programa está sendo encerrado. Fazer os ajustes finais
-        if(quemEstaOnlineTimer.isRunning())
-            quemEstaOnlineTimer.stop();
+        if(quemEstaOnLine.isRunning())
+            quemEstaOnLine.stop();
         if(timeoutQuemEstaOnlineTimer.isRunning())
             timeoutQuemEstaOnlineTimer.stop();
         if(timeoutAguardandoJogadorRemoto.isRunning())
             timeoutAguardandoJogadorRemoto.stop();
 
         // informa à rede que jogador local ficou offline
-        enviarMensagemUDP(addrBroadcast, 3, apelidoLocal);
+        enviarMensagemUDP(enderecoBroad, 3, apelidoJogador);
         
         // encerra thread de escuta da porta UDP
-        if (udpEscutaThread != null)
+        if (threadEscutaUDP != null)
         {
-            udpEscutaThread.encerraConexao();
-            udpEscutaThread.cancel(true);
+            threadEscutaUDP.encerraConexao();
+            threadEscutaUDP.cancel(true);
         }
         
         // encerra thread de escuta da porta TCP
-        if (tcpEscutaThread != null)
+        if (threadEscutaTCP != null)
         {
-            tcpEscutaThread.encerraConexao();
-            tcpEscutaThread.cancel(true);
+            threadEscutaTCP.encerraConexao();
+            threadEscutaTCP.cancel(true);
         }
     }//GEN-LAST:event_formWindowClosing
             
     private void desconectaJogadorLocal()
     {
-        estaConectado = false;
+        jogadorConectado = false;
         
         // encerra temporizador de atualização da lista de jogadores online
-        if(quemEstaOnlineTimer.isRunning())
-            quemEstaOnlineTimer.stop();
+        if(quemEstaOnLine.isRunning())
+            quemEstaOnLine.stop();
         if(timeoutQuemEstaOnlineTimer.isRunning())
             timeoutQuemEstaOnlineTimer.stop();
         if(timeoutAguardandoJogadorRemoto.isRunning())
             timeoutAguardandoJogadorRemoto.stop();
         
         // limpa lista de jogadores online
-        jogadores.clear();
+        jogadoresOnline.clear();
         
         // envia mensagem informando que jogador local ficou offline
-        enviarMensagemUDP(addrBroadcast, 3, apelidoLocal);
+        enviarMensagemUDP(enderecoBroad, 3, apelidoJogador);
         
         // habilita/desabilita controles
         apelidoLocalJText.setEnabled(true);
@@ -934,20 +922,20 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         jogadorLocalJLabel.setEnabled(false);
         
 //        // apaga apelido do jogador local no tabuleiro
-//        jogadorLocalJLabel.setText(POSICAO_LOCAL + " - Local");
+//        jogadorLocalJLabel.setText(POSICAO_JOGADOR_LOCAL + " - Local");
         
         // encerra thread de leitura da porta UDP
-        if (udpEscutaThread != null)
+        if (threadEscutaUDP != null)
         {
-            udpEscutaThread.encerraConexao();
-            udpEscutaThread.cancel(true);
+            threadEscutaUDP.encerraConexao();
+            threadEscutaUDP.cancel(true);
         }
         
         // encerra thread de leitura da porta TCP
-        if (tcpEscutaThread != null)
+        if (threadEscutaTCP != null)
         {
-            tcpEscutaThread.encerraConexao();
-            tcpEscutaThread.cancel(true);
+            threadEscutaTCP.encerraConexao();
+            threadEscutaTCP.cancel(true);
         }
        
         statusJLabel.setText("");
@@ -966,7 +954,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
         // salva dados do jogador remoto
         apelidoRemoto = j.getApelido();
-        addrJogadorRemoto = j.getAddress();
+        enderecoRemoto = j.getAddress();
         
         // confirma convite
         statusJLabel.setText("");
@@ -979,22 +967,22 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             return;
 
         // enviar convite para jogador remoto e iniciar temporizador para timeout
-        enviarMensagemUDP(j.getAddress(), 4, apelidoLocal);
+        enviarMensagemUDP(j.getAddress(), 4, apelidoJogador);
         esperandoRespostaConvite = true;
         statusJLabel.setText("AGUARDANDO RESPOSTA");
         timeoutAguardandoJogadorRemoto.start();
     }//GEN-LAST:event_convidarJButtonActionPerformed
 
     private void conectarJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conectarJButtonActionPerformed
-        if(estaConectado)
+        if(jogadorConectado)
         {
             desconectaJogadorLocal();
             return;
         }
 
         // apelido do jogador local
-        apelidoLocal = apelidoLocalJText.getText().trim();
-        if (apelidoLocal.isEmpty())
+        apelidoJogador = apelidoLocalJText.getText().trim();
+        if (apelidoJogador.isEmpty())
         {
             apelidoLocalJText.requestFocus();
             return;
@@ -1009,8 +997,8 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         }
 
         // obtem endereço da interface de rede selecionada
-        addrLocal = obtemInterfaceRede();
-        if(addrLocal == null)
+        enderecoLocal = obtemInterfaceRede();
+        if(enderecoLocal == null)
         {
             JOptionPane.showMessageDialog(null,
                 "Erro na obtenção da interface escolhida.",
@@ -1022,20 +1010,20 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // cria thread para leitura da porta UDP
         try
         {
-            udpEscutaThread = new EscutaUDP(this, PORTA_UDP, apelidoLocal,
-                addrLocal);
+            threadEscutaUDP = new EscutaUDP(this, UDP_PORTA, apelidoJogador,
+                enderecoLocal);
         }catch(SocketException ex)
         {
             JOptionPane.showMessageDialog(null,
-                "Erro na criação do thread de leitura da porta "+ PORTA_UDP +
+                "Erro na criação do thread de leitura da porta "+ UDP_PORTA +
                 ".\n" + ex.getMessage(),
                 "Conexão do jogador local",
                 JOptionPane.ERROR_MESSAGE);
-            encerraPrograma();
+            finalizaPrograma();
             return;
         }
 
-        estaConectado = true;
+        jogadorConectado = true;
 
         // habilita/desabilita controles
         apelidoLocalJText.setEnabled(false);
@@ -1044,18 +1032,18 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         jogadorLocalJLabel.setEnabled(true);
 
 //        // mostra apelido do jogador local no tabuleiro
-//        jogadorLocalJLabel.setText(POSICAO_LOCAL + " - " + apelidoLocal);
+//        jogadorLocalJLabel.setText(POSICAO_JOGADOR_LOCAL + " - " + apelidoLocal);
 
         // executa thread de leitura da porta UDP
-        udpEscutaThread.execute();
+        threadEscutaUDP.execute();
 
         // envia mensagem para todos os jogadores informando que
         // jogador local ficou online
-        enviarMensagemUDP(addrBroadcast, 1, apelidoLocal);
+        enviarMensagemUDP(enderecoBroad, 1, apelidoJogador);
 
         // inicia temporizador de atualização da lista de jogadores online
-        if(quemEstaOnlineTimer.isRunning() == false)
-        quemEstaOnlineTimer.start();
+        if(quemEstaOnLine.isRunning() == false)
+        quemEstaOnLine.start();
 
     }//GEN-LAST:event_conectarJButtonActionPerformed
 
@@ -1122,7 +1110,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             return;
         
         // verifica se quem respondeu foi realmente o jogador remoto
-        if ((addr.equals(addrJogadorRemoto) == false) ||
+        if ((addr.equals(enderecoRemoto) == false) ||
             apelidoRemoto.compareToIgnoreCase(strPartes[0]) != 0)
                 return;
 
@@ -1168,7 +1156,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     private void escolhePosicao(int pos)
     {
         // verifica se existe jogo em andamento e é vez do jogador corrente
-        if (estaJogando == true && minhaVez == true)
+        if (estaRodando == true && vezAtual == true)
             marcaPosicao(JOGADOR_LOCAL, pos);
     }
 
@@ -1181,7 +1169,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // verifica se posição está vazia
         int linha = (pos - 1) / 3;
         int coluna = (pos - 1) % 3;
-        if (tabuleiro[linha][coluna] != POSICAO_VAZIA)
+        if (telaJogo[linha][coluna] != VAZIO)
             return;
         
         Color cor;
@@ -1189,16 +1177,16 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         if(quemEscolheu == JOGADOR_LOCAL)
         {
             cor = COR_LOCAL;
-            marca = POSICAO_LOCAL;
+            marca = POSICAO_JOGADOR_LOCAL;
         }
         else
         {
             cor = COR_REMOTO;
-            marca = POSICAO_REMOTO;
+            marca = POSICAO_JOGADOR_REMOTO;
         }
         
         // preenche tabuleiro e mostra posição selecionada
-        tabuleiro[linha][coluna] = marca;
+        telaJogo[linha][coluna] = marca;
         javax.swing.JLabel ctrl = null;
         switch(pos)
         {
@@ -1233,21 +1221,21 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // verifica se jogo empatou
         if (jogoEmpatou())
         {
-            resultados[jogoAtual - 1] = EMPATE;
-            mostraResultadoPartida(EMPATE);
-            novaPartida(EMPATE);
+            resultados[jogoAtual - 1] = EMPATADO;
+            mostraResultadoPartida(EMPATADO);
+            novaPartida(EMPATADO);
             return;
         }
         
         // agora é a vez do outro jogador
         if (quemEscolheu == JOGADOR_LOCAL)
         {
-            minhaVez = false;
+            vezAtual = false;
             statusJLabel.setText("AGUARDANDO JOGADOR");
         }
         else
         {
-            minhaVez = true;
+            vezAtual = true;
             statusJLabel.setText("SUA VEZ");
         }
     }
@@ -1264,13 +1252,13 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         if (jogador == 1)
         {
             // jogador remoto iniciará o jogo
-            minhaVez = inicieiUltimoJogo = true;
+            vezAtual = ultimoJogoComecado = true;
             statusJLabel.setText("ESPERANDO JOGADOR");
         }
         else
         {
             // jogador local iniciará o jogo
-            minhaVez = inicieiUltimoJogo = true;
+            vezAtual = ultimoJogoComecado = true;
             statusJLabel.setText("SUA VEZ");
         }
     }
@@ -1283,9 +1271,9 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         String msg = "";
         switch(quemGanhou % 10)
         {
-            case EMPATE: msg = "Partida empatou!"; break;
-            case VITORIA_LOCAL: msg = "Você ganhou!"; break;
-            case VITORIA_REMOTO: msg = "Você perdeu!"; break;
+            case EMPATADO: msg = "Partida empatou!"; break;
+            case GANHOU_LOCAL: msg = "Você ganhou!"; break;
+            case GANHOU_REMOTO: msg = "Você perdeu!"; break;
         }
         
         if (jogoAtual == 5)
@@ -1293,7 +1281,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             int local = Integer.parseInt(placarLocalJLabel.getText());
             int remoto = Integer.parseInt(placarRemotoJLabel.getText());
             msg += "\n\nPlacar final:" +
-                   "\n    " + apelidoLocal + ": " + local +
+                   "\n    " + apelidoJogador + ": " + local +
                    "\n    " + apelidoRemoto + ": " + remoto +
                    "\n\n";
             if (local == remoto)
@@ -1321,28 +1309,28 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
         switch(posicoesVencedoras)
         {
-            case LINHA_1:
+            case GANHOU_NA_LINHA_1:
                 destaca[0][0] = destaca[0][1] = destaca[0][2] = true;
                 break;
-            case LINHA_2:
+            case GANHOU_NA_LINHA_2:
                 destaca[1][0] = destaca[1][1] = destaca[1][2] = true;
                 break;
-            case LINHA_3:
+            case GANHOU_NA_LINHA_3:
                 destaca[2][0] = destaca[2][1] = destaca[2][2] = true;
                 break;
-            case COLUNA_1:
+            case GANHOU_NA_COLUNA_1:
                 destaca[0][0] = destaca[1][0] = destaca[2][0] = true;
                 break;
-            case COLUNA_2:
+            case GANHOU_NA_COLUNA_2:
                 destaca[0][1] = destaca[1][1] = destaca[2][1] = true;
                 break;
-            case COLUNA_3:
+            case GANHOU_NA_COLUNA_3:
                 destaca[0][2] = destaca[1][2] = destaca[2][2] = true;
                 break;
-            case DIAGONAL_PRINCIPAL:
+            case GANHOU_NA_DIAGONAL_PRINCIPAL:
                 destaca[0][0] = destaca[1][1] = destaca[2][2] = true;
                 break;
-            case DIAGONAL_SECUNDARIA:
+            case GANHOU_NA_DIAGONAL_SECUNDARIA:
                 destaca[0][2] = destaca[1][1] = destaca[2][0] = true;
                 break;
         }
@@ -1376,55 +1364,55 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // verifica linhas
         for(int linha = 0; linha < 3; ++linha)
         {
-            if((tabuleiro[linha][0] != POSICAO_VAZIA) &&
-               (tabuleiro[linha][0] == tabuleiro[linha][1]) &&
-               (tabuleiro[linha][1] == tabuleiro[linha][2]))
+            if((telaJogo[linha][0] != VAZIO) &&
+               (telaJogo[linha][0] == telaJogo[linha][1]) &&
+               (telaJogo[linha][1] == telaJogo[linha][2]))
             {
                 int resultado = 0;
                 switch(linha)
                 {
-                    case 0: resultado = LINHA_1; break;
-                    case 1: resultado = LINHA_2; break;
-                    case 2: resultado = LINHA_3; break;
+                    case 0: resultado = GANHOU_NA_LINHA_1; break;
+                    case 1: resultado = GANHOU_NA_LINHA_2; break;
+                    case 2: resultado = GANHOU_NA_LINHA_3; break;
                 }
                 return 10 * resultado +
-                       (tabuleiro[linha][0] == POSICAO_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
+                       (telaJogo[linha][0] == POSICAO_JOGADOR_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
             }
         }
         
         // verifica colunas
         for(int coluna = 0; coluna < 3; ++coluna)
         {
-            if((tabuleiro[0][coluna] != POSICAO_VAZIA) &&
-               (tabuleiro[0][coluna] == tabuleiro[1][coluna]) &&
-               (tabuleiro[1][coluna] == tabuleiro[2][coluna]))
+            if((telaJogo[0][coluna] != VAZIO) &&
+               (telaJogo[0][coluna] == telaJogo[1][coluna]) &&
+               (telaJogo[1][coluna] == telaJogo[2][coluna]))
             {
                 int resultado = 0;
                 switch(coluna)
                 {
-                    case 0: resultado = COLUNA_1; break;
-                    case 1: resultado = COLUNA_2; break;
-                    case 2: resultado = COLUNA_3; break;
+                    case 0: resultado = GANHOU_NA_COLUNA_1; break;
+                    case 1: resultado = GANHOU_NA_COLUNA_2; break;
+                    case 2: resultado = GANHOU_NA_COLUNA_3; break;
                 }
                 
                 return 10 * resultado +
-                       (tabuleiro[0][coluna] == POSICAO_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
+                       (telaJogo[0][coluna] == POSICAO_JOGADOR_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
             }
         }
         
         // verifica diagonal principal
-        if((tabuleiro[0][0] != POSICAO_VAZIA) &&
-           (tabuleiro[0][0] == tabuleiro[1][1]) &&
-           (tabuleiro[1][1] == tabuleiro[2][2]))
-                return 10 * DIAGONAL_PRINCIPAL +
-                       (tabuleiro[0][0] == POSICAO_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
+        if((telaJogo[0][0] != VAZIO) &&
+           (telaJogo[0][0] == telaJogo[1][1]) &&
+           (telaJogo[1][1] == telaJogo[2][2]))
+                return 10 * GANHOU_NA_DIAGONAL_PRINCIPAL +
+                       (telaJogo[0][0] == POSICAO_JOGADOR_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
         
         // verifica diagonal secundária
-        if((tabuleiro[0][2] != POSICAO_VAZIA) &&
-           (tabuleiro[0][2] == tabuleiro[1][1]) &&
-           (tabuleiro[1][1] == tabuleiro[2][0]))
-                return 10 * DIAGONAL_SECUNDARIA +
-                       (tabuleiro[0][2] == POSICAO_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
+        if((telaJogo[0][2] != VAZIO) &&
+           (telaJogo[0][2] == telaJogo[1][1]) &&
+           (telaJogo[1][1] == telaJogo[2][0]))
+                return 10 * GANHOU_NA_DIAGONAL_SECUNDARIA +
+                       (telaJogo[0][2] == POSICAO_JOGADOR_LOCAL ? JOGADOR_LOCAL : JOGADOR_REMOTO);
 
         // não teve ganhador
         return SEM_GANHADOR;
@@ -1436,7 +1424,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         if (jogoAtual == 5)
         {
             // encerra jogo
-            encerrarConexaoTCP(FIM_JOGO);
+            encerrarConexaoTCP(FIM);
             
             return;
         }
@@ -1455,22 +1443,22 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         if (ultimoGanhador != JOGADOR_LOCAL)
         {
             boolean enviaMensagem = true;
-            if(ultimoGanhador == EMPATE)
-                enviaMensagem = !inicieiUltimoJogo;
+            if(ultimoGanhador == EMPATADO)
+                enviaMensagem = !ultimoJogoComecado;
             
             if (enviaMensagem)
             {
                 // iniciar novo jogo
                 conexaoTCP.enviarMensagemTCP(9, null);
                 
-                minhaVez = inicieiUltimoJogo = true;
+                vezAtual = ultimoJogoComecado = true;
                 statusJLabel.setText("SUA VEZ");
             }
         }
         else
         {
             // esperar jogador remoto iniciar novo jogo
-            minhaVez = inicieiUltimoJogo = false;
+            vezAtual = ultimoJogoComecado = false;
             statusJLabel.setText("AGUARDANDO INÍCIO");
             esperandoInicioJogo = true;
         }
@@ -1487,7 +1475,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     {
         for(int i = 0; i < 3; ++i)
             for(int j = 0; j < 3; ++j)
-                if(tabuleiro[i][j] == POSICAO_VAZIA)
+                if(telaJogo[i][j] == VAZIO)
                     return false;
         
         return true;
@@ -1513,14 +1501,14 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                                 compl);
         
         DatagramPacket p = new DatagramPacket(msg.getBytes(),
-                        msg.getBytes().length, addr, PORTA_UDP);
+                        msg.getBytes().length, addr, UDP_PORTA);
         
         DatagramSocket udpSocket = null;
         try {
             // cria um socket do tipo datagram e liga-o a qualquer porta
             // disponível. Lembrando que PORTA_UDP local está ocupada
-            udpSocket = new DatagramSocket(0, addrLocal);
-            udpSocket.setBroadcast(addr.equals(addrBroadcast));
+            udpSocket = new DatagramSocket(0, enderecoLocal);
+            udpSocket.setBroadcast(addr.equals(enderecoBroad));
             
             // envia dados para o endereço e porta especificados no pacote
             udpSocket.send(p);                    
@@ -1553,10 +1541,10 @@ public class TabuleiroFrame extends javax.swing.JFrame {
 
     public void atualizarListaJogadoresOnline()
     {
-        for(int i = 0; i < jogadores.size(); ++i)
+        for(int i = 0; i < jogadoresOnline.size(); ++i)
         {
-            if(jogadores.get(i).getAindaOnline() == false)
-                jogadores.remove(i);
+            if(jogadoresOnline.get(i).getAindaOnline() == false)
+                jogadoresOnline.remove(i);
         }
     }
     
@@ -1568,10 +1556,10 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         JogadorOnLine novoJogador;
         
         // percorre toda a lista
-        for(int i = 0; i < jogadores.size(); ++i)
+        for(int i = 0; i < jogadoresOnline.size(); ++i)
         {
             // jogador corrente
-            j = jogadores.get(i);
+            j = jogadoresOnline.get(i);
             
             // verifica se jogador já está na lista
             if(j.mesmoApelido(apelido))
@@ -1580,7 +1568,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
                 // informar para o jogador que enviou o pacote que eu estou online
                 if(nMsg == 1)
-                    enviarMensagemUDP(addr, 2, apelidoLocal);
+                    enviarMensagemUDP(addr, 2, apelidoJogador);
                 
                 return;
             }
@@ -1589,11 +1577,11 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             if (j.getApelido().compareToIgnoreCase(apelido) > 0)
             {
                 novoJogador = new JogadorOnLine(apelido, addr);
-                jogadores.add(i, novoJogador);
+                jogadoresOnline.add(i, novoJogador);
         
                 // informar para o jogador que enviou o pacote que eu estou online
                 if(nMsg == 1)
-                    enviarMensagemUDP(addr, 2, apelidoLocal);
+                    enviarMensagemUDP(addr, 2, apelidoJogador);
                 
                 return;
             }
@@ -1601,26 +1589,26 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
         // insere jogador no final da lista
         novoJogador = new JogadorOnLine(apelido, addr);
-        jogadores.addElement(novoJogador);
+        jogadoresOnline.addElement(novoJogador);
         
         // informar para o jogador que enviou o pacote que eu estou online
         if(nMsg == 1)
-            enviarMensagemUDP(addr, 2, apelidoLocal);
+            enviarMensagemUDP(addr, 2, apelidoJogador);
     }
     
     // remove jogador da lista de jogadore online
     public void removeJogador(String apelido)
     {
-        if(estaJogando && (apelido.compareToIgnoreCase(apelidoRemoto) == 0))
+        if(estaRodando && (apelido.compareToIgnoreCase(apelidoRemoto) == 0))
             encerrarConexaoTCP(JOGADOR_DESISTIU);
         
         // percorre toda a lista
-        for(int i = 0; i < jogadores.size(); ++i)
+        for(int i = 0; i < jogadoresOnline.size(); ++i)
         {
             // verifica se jogador foi encontrado
-            if(jogadores.get(i).mesmoApelido(apelido))
+            if(jogadoresOnline.get(i).mesmoApelido(apelido))
             {
-                jogadores.remove(i);
+                jogadoresOnline.remove(i);
                 return;
             }
         }
@@ -1651,7 +1639,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     {
         // verifica se jogador local já está jogando
         String msg;
-        if(estaJogando)
+        if(estaRodando)
         {
             mostraMensagem(MSG_INFO, MSG_PROTO_NENHUM, addr.getHostAddress(),
                     -1, "Convite recusado automaticamente");
@@ -1664,9 +1652,9 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         }
         
         // atualiza variáveis e controle
-        fuiConvidado = true;
+        convidado = true;
         statusJLabel.setText("");
-        addrJogadorRemoto = null;
+        enderecoRemoto = null;
         
         // pergunta se jogador local aceita o convite
         msg = "O jogador " + apelido + " está te convidando para um jogo\nAceita?";
@@ -1677,7 +1665,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         // resposta de negação do convite
         if (resp == JOptionPane.NO_OPTION)
         {
-            msg = apelidoLocal + "|0";
+            msg = apelidoJogador + "|0";
             enviarMensagemUDP(addr, 5, msg);
             mostraMensagem(MSG_INFO, MSG_PROTO_NENHUM, "", 0, "Convite não foi aceito");
             return;
@@ -1694,7 +1682,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             
             // envia resposta de recusa do convite
-            msg = apelidoLocal + "|0";
+            msg = apelidoJogador + "|0";
             enviarMensagemUDP(addr, 5, msg);
             statusJLabel.setText("");
             return;
@@ -1702,13 +1690,13 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
         // atualiza variáveis, cria thread para espera jogador remoto
         // conectar na conexão TCP criada
-        addrJogadorRemoto = addr;
+        enderecoRemoto = addr;
         apelidoRemoto = apelido;
-        tcpEscutaThread = new EscutaTCP(this, servidorTCP, addr);
-        tcpEscutaThread.execute();
+        threadEscutaTCP = new EscutaTCP(this, servidorTCP, addr);
+        threadEscutaTCP.execute();
             
         // envia resposta aceitando o convite
-        msg = apelidoLocal + "|" + servidorTCP.getLocalPort();
+        msg = apelidoJogador + "|" + servidorTCP.getLocalPort();
         enviarMensagemUDP(addr, 5, msg);
         
         esperandoConexao = true;
@@ -1729,7 +1717,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     public void jogadorRemotoConfirmou(InetAddress addr)
     {
         // verifica se quem confirmou foi realmente o jogador remoto
-        if (addr.equals(addrJogadorRemoto) == false)
+        if (addr.equals(enderecoRemoto) == false)
             return;
 
         esperandoConfirmacao = false;
@@ -1780,9 +1768,9 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     public void encerrarConexaoTCP(int motivo)
     {
         // se jogador estiver jogando, encerra a série
-        if(estaJogando)
+        if(estaRodando)
         {
-            estaJogando = false;
+            estaRodando = false;
             zeraResultados();
             limpaTabuleiro();
         }
@@ -1803,13 +1791,13 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             if(servidorTCP != null)
                 servidorTCP.close();
             
-            if(tcpEscutaThread != null)
-                tcpEscutaThread.cancel(true);
+            if(threadEscutaTCP != null)
+                threadEscutaTCP.cancel(true);
         } catch(IOException ex)
         {
         }
         servidorTCP = null;
-        tcpEscutaThread = null;
+        threadEscutaTCP = null;
         
         // encerra conexão TCP
         if (conexaoTCP != null)
@@ -1817,13 +1805,13 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         
         conexaoTCP = null;
         
-        if(motivo == CONEXAO_TIMEOUT)
+        if(motivo == TEMPO_EXCEDIDO)
             JOptionPane.showMessageDialog(null,
                     "TIMEOUT: aguardando conexão remota.",
                     "Encerrar jogo",
                     JOptionPane.WARNING_MESSAGE);
         
-        if(motivo == CONEXAO_CAIU)
+        if(motivo == CONEXAO_PERDIDA)
             JOptionPane.showMessageDialog(null,
                     "Conexão com jogador remoto caiu.",
                     "Encerrar jogo",
@@ -1856,30 +1844,30 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             timeoutAguardandoJogadorRemoto.stop();
         
         // atualiza tela
-        jogadorRemotoJLabel.setText(apelidoRemoto + " - " + POSICAO_REMOTO);
+        jogadorRemotoJLabel.setText(apelidoRemoto + " - " + POSICAO_JOGADOR_REMOTO);
         jogadorRemotoJLabel.setEnabled(true);
         
-        if (fuiConvidado)
+        if (convidado)
         {
             // envia mensagem MSG07 para jogador remoto
-            int n = numAleatorio.nextInt(2) + 1;
+            int n = random.nextInt(2) + 1;
             if (n == JOGADOR_LOCAL)
             {
                 // jogador local irá iniciar o jogo
-                minhaVez = inicieiUltimoJogo = true;
+                vezAtual = ultimoJogoComecado = true;
                 statusJLabel.setText("SUA VEZ");
             }
             else
             {
                 // jogador remoto irá iniciar o jogo
-                minhaVez = inicieiUltimoJogo = false;
+                vezAtual = ultimoJogoComecado = false;
                 statusJLabel.setText("ESPERANDO JOGADOR");
             }
             String compl = String.valueOf(n);
             conexaoTCP.enviarMensagemTCP(7, compl);
         }
         
-        estaJogando = true;
+        estaRodando = true;
         jogoAtual = 1;
         zeraResultados();
 
@@ -1897,7 +1885,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         {
             for(int j = 0; j < 3; ++j)
             {
-                tabuleiro[i][j] = POSICAO_VAZIA;
+                telaJogo[i][j] = VAZIO;
                 switch(pos)
                 {
                     case 0: pos1JLabel.setText(""); break;
@@ -1919,14 +1907,14 @@ public class TabuleiroFrame extends javax.swing.JFrame {
     {
         String nomeRemoto;
         Color corTabuleiro;
-        if (estaJogando)
+        if (estaRodando)
         {
-            nomeRemoto = apelidoRemoto + " - " + POSICAO_REMOTO;
+            nomeRemoto = apelidoRemoto + " - " + POSICAO_JOGADOR_REMOTO;
             corTabuleiro = Color.BLACK;
         }
         else
         {
-            nomeRemoto = "Remoto - " + POSICAO_REMOTO;
+            nomeRemoto = "Remoto - " + POSICAO_JOGADOR_REMOTO;
             corTabuleiro = Color.DARK_GRAY;
         }
         
@@ -1944,7 +1932,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         {
             for(int j = 0; j < 3; ++j)
             {
-                tabuleiro[i][j] = POSICAO_VAZIA;
+                telaJogo[i][j] = VAZIO;
                 switch(pos)
                 {
                     case 0: pos1JLabel.setText(""); break;
@@ -1961,9 +1949,9 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             }
         }
         
-        jogadorRemotoJLabel.setEnabled(estaJogando);
-        placarLocalJLabel.setEnabled(estaJogando);
-        placarRemotoJLabel.setEnabled(estaJogando);
+        jogadorRemotoJLabel.setEnabled(estaRodando);
+        placarLocalJLabel.setEnabled(estaRodando);
+        placarRemotoJLabel.setEnabled(estaRodando);
     }
     
     public void mostraResultados()
@@ -1983,7 +1971,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
             }
             
             cor = Color.DARK_GRAY;
-            if (estaJogando)
+            if (estaRodando)
             {
                 if(((i + 1) == jogoAtual) && (resultados[i] == SEM_RESULTADO))
                     cor = Color.BLACK;
@@ -1991,11 +1979,11 @@ public class TabuleiroFrame extends javax.swing.JFrame {
                 {
                     switch (resultados[i])
                     {
-                        case VITORIA_LOCAL:
+                        case GANHOU_LOCAL:
                             ++local;
                             cor = COR_LOCAL;
                             break;
-                        case VITORIA_REMOTO:
+                        case GANHOU_REMOTO:
                             ++remoto;
                             cor = COR_REMOTO;
                             break;
@@ -2024,7 +2012,7 @@ public class TabuleiroFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TabuleiroFrame().setVisible(true);
+                new TelaJogo().setVisible(true);
             }
         });
     }

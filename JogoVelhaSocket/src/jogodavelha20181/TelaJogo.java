@@ -299,6 +299,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos1JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos1JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos1JLabel.setAlignmentY(0.0F);
+        pos1JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos1JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos1JLabelMouseClicked(evt);
@@ -310,12 +311,12 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 146, Short.MAX_VALUE)
-                .addComponent(pos1JLabel))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pos1JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pos1JLabel)
+            .addComponent(pos1JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 102, 255));
@@ -325,6 +326,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos2JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos2JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos2JLabel.setAlignmentY(0.0F);
+        pos2JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos2JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos2JLabelMouseClicked(evt);
@@ -339,7 +341,7 @@ public class TelaJogo extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pos2JLabel)
+            .addComponent(pos2JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel6.setBackground(new java.awt.Color(204, 102, 255));
@@ -349,6 +351,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos3JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos3JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos3JLabel.setAlignmentY(0.0F);
+        pos3JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos3JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos3JLabelMouseClicked(evt);
@@ -360,14 +363,14 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(pos3JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos3JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(pos3JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos3JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel7.setBackground(new java.awt.Color(204, 102, 255));
@@ -377,6 +380,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos4JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos4JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos4JLabel.setAlignmentY(0.0F);
+        pos4JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos4JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos4JLabelMouseClicked(evt);
@@ -388,13 +392,13 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(pos4JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos4JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(pos4JLabel)
+                .addComponent(pos4JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -405,6 +409,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos5JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos5JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos5JLabel.setAlignmentY(0.0F);
+        pos5JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos5JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos5JLabelMouseClicked(evt);
@@ -416,14 +421,14 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(pos5JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos5JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(pos5JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos5JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 102, 255));
@@ -433,6 +438,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos6JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos6JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos6JLabel.setAlignmentY(0.0F);
+        pos6JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos6JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos6JLabelMouseClicked(evt);
@@ -444,13 +450,13 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(pos6JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos6JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(pos6JLabel)
+                .addComponent(pos6JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -461,6 +467,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos7JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos7JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos7JLabel.setAlignmentY(0.0F);
+        pos7JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos7JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos7JLabelMouseClicked(evt);
@@ -472,13 +479,13 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(pos7JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos7JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(pos7JLabel)
+                .addComponent(pos7JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -489,6 +496,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos8JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos8JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos8JLabel.setAlignmentY(0.0F);
+        pos8JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos8JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos8JLabelMouseClicked(evt);
@@ -500,14 +508,14 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(pos8JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos8JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(pos8JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos8JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel12.setBackground(new java.awt.Color(204, 102, 255));
@@ -517,6 +525,7 @@ public class TelaJogo extends javax.swing.JFrame {
         pos9JLabel.setFont(new java.awt.Font("Calibri", 1, 54)); // NOI18N
         pos9JLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pos9JLabel.setAlignmentY(0.0F);
+        pos9JLabel.setPreferredSize(new java.awt.Dimension(150, 150));
         pos9JLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pos9JLabelMouseClicked(evt);
@@ -528,13 +537,13 @@ public class TelaJogo extends javax.swing.JFrame {
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(pos9JLabel)
-                .addGap(0, 146, Short.MAX_VALUE))
+                .addComponent(pos9JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
-                .addComponent(pos9JLabel)
+                .addComponent(pos9JLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -570,19 +579,19 @@ public class TelaJogo extends javax.swing.JFrame {
             .addGroup(posicoesJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(posicoesJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(posicoesJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(posicoesJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
